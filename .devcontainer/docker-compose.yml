@@ -1,0 +1,32 @@
+version: '3'
+services:
+    html5db:
+        image: mariadb:10.1.14
+        restart: unless-stopped
+        ports:
+            - "43306:3306"
+            - "44567:4567"
+            - "44568:4568"
+            - "44444:4444"
+        environment:
+            - MYSQL_DATABASE=html5dicomswift
+            - MYSQL_USER=html5dicomswift
+            - MYSQL_PASSWORD=html5dicomswift
+            - MYSQL_ROOT_PASSWORD=html5dicomswift
+        volumes:
+            - html5db_data:/var/lib/mysql    
+    backend:        
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        volumes:            
+            - ..:/workspace            
+        cap_add:
+         - SYS_PTRACE
+        security_opt:
+          - seccomp:unconfined
+        command: sleep infinity 
+        depends_on:
+            - html5db
+volumes:
+    html5db_data:

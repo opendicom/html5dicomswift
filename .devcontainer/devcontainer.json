@@ -1,0 +1,15 @@
+{
+	"name": "html5dicomswift",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "backend",
+	"workspaceFolder": "/workspace",	
+	"extensions": [
+		"pvasek.sourcekit-lsp--dev-unofficial",
+        "vadimcn.vscode-lldb"
+	],
+    "settings": {
+        "lldb.adapterType": "bundled",
+        "lldb.executable": "/usr/bin/lldb",
+        "terminal.integrated.shell.linux": "/bin/bash"
+    }
+}
