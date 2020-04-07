@@ -1,1 +1,4 @@
-print("Hello, from html5dicomswift in docker")
+import Foundation
+
+var user = UserDB()
+try! user.select(userID: 1)
