@@ -2,7 +2,7 @@
 	"name": "html5dicomswift",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "backend",
-	"workspaceFolder": "/workspace",	
+    "workspaceFolder": "/workspace",
 	"extensions": [
 		"pvasek.sourcekit-lsp--dev-unofficial",
         "vadimcn.vscode-lldb"
