@@ -6,15 +6,16 @@ import PackageDescription
 let package = Package(
     name: "html5dicomswift",
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/vapor/mysql-nio.git", from: "1.0.0-rc.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "html5dicomswift",
-            dependencies: []),
+            dependencies: [
+                .product(name: "MySQLNIO", package: "mysql-nio"),
+            ]),
         .testTarget(
             name: "html5dicomswiftTests",
             dependencies: ["html5dicomswift"]),
