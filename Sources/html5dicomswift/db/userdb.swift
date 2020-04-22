@@ -1,5 +1,6 @@
 import Foundation
 import MySQLNIO
+import MySQLKit
 
 struct UserDB {
 
@@ -8,20 +9,24 @@ struct UserDB {
         return self.group.next()
     }
 
-    init(){
-        //self.group = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+    init() { }
+
+    func select(userPK: Int) throws -> User {        
+        let conn = try MySQLConnection.openConnection(on: self.eventLoop).wait()
+        let db: SQLDatabase = conn.sql()
+        defer { try! conn.close().wait() }
+        let rows = try db.raw("SELECT * from users where pk=\(String(userPK))")
+            .all(decoding: User.self).wait()
+        return rows[0]        
     }
 
-    func select(userID: Int) throws {        
+    func selectStaffUser() throws -> Array<User> {        
         let conn = try MySQLConnection.openConnection(on: self.eventLoop).wait()
+        let db: SQLDatabase = conn.sql()
         defer { try! conn.close().wait() }        
-        let rows = try! conn.query("SELECT * from users where pk=\(userID)").wait()
-        print(rows.count)
-        print(rows[0].column("username"))
-        print(rows[0].column("title"))
-        print(rows[0].column("first_name"))
-        print(rows[0].column("last_name"))
-        print(rows[0].column("created"))
-    }
+        let rows = try db.raw("SELECT * from users where is_staff=1")
+            .all(decoding: User.self).wait()
+        return rows        
+    }  
 
 }
